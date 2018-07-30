@@ -2,13 +2,10 @@ require 'erb'
 require 'openapi3_parser'
 require 'uri'
 require 'pry'
+
 module GovukTechDocs
-  class ApiReference < Middleman::Extension
-    expose_to_application api: :api
-
-    def initialize(app, options_hash={}, &block)
-      super
-
+  class ApiReference
+    def initialize(app)
       @app = app
       @config = @app.config[:tech_docs]
 
@@ -108,7 +105,6 @@ module GovukTechDocs
       return output
     end
 
-
     def render_markdown(text)
       if text
         return Tilt['markdown'].new(context: @app){ text }.render
@@ -152,5 +148,3 @@ module GovukTechDocs
     end
   end
 end
-
-::Middleman::Extensions.register(:api_reference, GovukTechDocs::ApiReference)
